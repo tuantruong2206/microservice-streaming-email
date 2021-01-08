@@ -7,7 +7,7 @@ spring:
       instance-count: 2
       instance-index: 0
       function:
-        definition: orderShippingProcess  # active processes of kafka stream
+        definition: orderEmailProcess  # active processes of kafka stream
       kafka:
         binder:
           configuration:
@@ -25,26 +25,20 @@ spring:
               application.server: localhost:8040
             functions:
               #            #APPLICATION ID if we have more than one stream app within same springboot
-              orderShippingProcess:
-                applicationId: order-shipping-process-id-instance
+              orderEmailProcess:
+                applicationId: order-email-process-id-instance
             state-store-retry:
               max-attempts: 3
               backoff-period: 2000
       bindings:
-        orderShippingProcess-in-0:
-          destination: microservice-orders
+        orderEmailProcess-in-0:
+          destination: microservice-completed-orders
           contentType: application/json
           #          nativeDecoding: false
           useNativeDecoding: false
           consumer:
-            keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
-            valueSerde: org.apache.kafka.common.serialization.Serdes$JsonSerde
-        orderShippingProcess-out-0:
-          producer:
             keySerde: org.apache.kafka.common.serialization.Serdes$LongSerde
             valueSerde: org.apache.kafka.common.serialization.Serdes$JsonSerde
-          destination: microservice-verified-orders
-          contentType: application/json
 
 
 
