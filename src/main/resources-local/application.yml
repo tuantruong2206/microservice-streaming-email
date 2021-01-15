@@ -20,6 +20,7 @@ spring:
           minPartitionCount: 4
           replicationFactor: 1
         streams:
+
           binder:
             configuration:
               application.server: localhost:8040
